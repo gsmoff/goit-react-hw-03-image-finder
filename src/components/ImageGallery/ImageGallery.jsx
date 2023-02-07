@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getImages } from '../services/getImages';
+import { getImages } from '../../services/getImages';
 import { Loader } from '../Loader/Loader';
 import { ImageGalleryItem } from './ImageGalleryItem';
 import { Button } from '../Button/Button';
@@ -26,8 +26,8 @@ export class ImageGallery extends Component {
             getImages(this.props.value, this.state.page)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    if (!parseInt(data.total) > 0) {
+                    // console.log(data);
+                    if (!data.total) {
                         // Promise.reject(new Error());
                         throw new Error();
                     }
@@ -64,7 +64,7 @@ export class ImageGallery extends Component {
             return (
                 <div className={css.colum}>
                     <ul className={css.imageGallery}>
-                        {images &&
+                        {images.length &&
                             images.map(
                                 ({ id, webformatURL, largeImageURL, tags }) => (
                                     <li
@@ -85,9 +85,11 @@ export class ImageGallery extends Component {
                                 )
                             )}
                     </ul>
-                    <Button clickHandler={this.loadMore} text="Load More">
-                        Load More
-                    </Button>
+                    {images.length && (
+                        <Button clickHandler={this.loadMore} text="Load More">
+                            Load More
+                        </Button>
+                    )}
                 </div>
             );
         }
@@ -95,6 +97,7 @@ export class ImageGallery extends Component {
 }
 
 ImageGallery.propTypes = {
-    showMore: PropTypes.func.isRequired,
+    showImg: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
 };
 

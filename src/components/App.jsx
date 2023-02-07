@@ -30,7 +30,6 @@ export class App extends Component {
                 <Toaster position="top-right" toastOption={{ duration: 500 }} />
                 <Searchbar onSearch={this.handleSubmit} />
                 <ImageGallery value={searchText} showImg={this.showMore} />
-                
                 {currentImg && (
                     <Modal
                         currentImg={currentImg}

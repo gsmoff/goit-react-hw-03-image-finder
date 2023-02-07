@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import toast from 'react-hot-toast';
 import { Search } from './Search';
 import './Searchbar.module.css';
@@ -39,3 +40,7 @@ export class Searchbar extends Component {
         );
     }
 }
+
+Searchbar.propTypes = {
+    onSearch: PropTypes.func.isRequired,
+};
