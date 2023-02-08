@@ -13,11 +13,17 @@ export class ImageGallery extends Component {
         error: '',
         status: 'idle',
         page: 1,
+        visibleButton: true,
     };
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.value !== this.props.value) {
-            this.setState({ images: [], page: 1, status: 'pending' });
+            this.setState({
+                images: [],
+                page: 1,
+                status: 'pending',
+                visibleButton: true,
+            });
         }
         if (
             prevProps.value !== this.props.value ||
@@ -30,6 +36,9 @@ export class ImageGallery extends Component {
                     if (!data.total) {
                         // Promise.reject(new Error());
                         throw new Error();
+                    }
+                    if (data.hits.length < 12) {
+                        this.setState({ visibleButton: false });
                     }
                     this.setState(prevState => ({
                         images: [...prevState.images, ...data.hits],
@@ -44,7 +53,7 @@ export class ImageGallery extends Component {
     };
 
     render() {
-        const { images, status } = this.state;
+        const { images, status, visibleButton } = this.state;
         const { showImg } = this.props;
         if (status === 'rejected') {
             return (
@@ -85,7 +94,7 @@ export class ImageGallery extends Component {
                                 )
                             )}
                     </ul>
-                    {images.length && (
+                    {images.length !== 0 && visibleButton === true && (
                         <Button clickHandler={this.loadMore} text="Load More">
                             Load More
                         </Button>
