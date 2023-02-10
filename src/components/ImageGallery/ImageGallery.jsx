@@ -61,6 +61,10 @@ export class ImageGallery extends Component {
 
 ImageGallery.propTypes = {
     showImg: PropTypes.func.isRequired,
+    images: PropTypes.array.isRequired,
     value: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    visibleButton: PropTypes.bool.isRequired,
+    loadMore: PropTypes.func.isRequired,
 };
 
